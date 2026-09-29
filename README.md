@@ -208,6 +208,9 @@ AirAware features a dedicated **Demo Mode** button in the header. Judges can tog
 
 ---
 
+
+
+
 ## 9. License
 
 Developed under Track 2 (Clean Air & Climate Resilience) for Hack2Skill. Open source under the Apache 2.0 License.
