@@ -1,0 +1,6 @@
+{
+  "name": "AirAware",
+  "description": "Climate resilience and clean air intelligence platform providing real-time air quality monitoring, weather risk analysis, extreme emergency preparedness, and AI-powered environmental advisory.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
