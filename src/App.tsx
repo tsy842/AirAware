@@ -10,6 +10,8 @@ import { AiAssistantView } from './components/AiAssistantView';
 import { ProfileSettingsView } from './components/ProfileSettingsView';
 import { AboutSourcesView } from './components/AboutSourcesView';
 import { AuthModal } from './components/AuthModal';
+import { MobileBottomNav } from './components/MobileBottomNav';
+import { PhoneReadyModal } from './components/PhoneReadyModal';
 import { api, getDemoModeData } from './services/api';
 import { AirQualityData, WeatherData, RiskIntelligenceReport, EmergencyAlert } from './types';
 import { Wind, Heart } from 'lucide-react';
@@ -21,6 +23,7 @@ function AppContent() {
   const [activeTab, setActiveTab] = useState<'dashboard' | 'map' | 'corridors' | 'alerts' | 'ai' | 'profile' | 'about'>('dashboard');
   const [aiInitialPrompt, setAiInitialPrompt] = useState<string | undefined>(undefined);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false);
 
   // Active Location state
   const [location, setLocation] = useState<{
@@ -142,10 +145,11 @@ function AppContent() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         onOpenAuth={() => setIsAuthModalOpen(true)}
+        onOpenPhoneModal={() => setIsPhoneModalOpen(true)}
       />
 
-      {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      {/* Main Content Area with safe padding for mobile bottom bar */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-24 md:pb-8">
         {activeTab === 'dashboard' && (
           <DashboardView
             location={location}
@@ -236,6 +240,19 @@ function AppContent() {
       <AuthModal
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}
+      />
+
+      {/* Phone Ready & PWA Install Modal */}
+      <PhoneReadyModal
+        isOpen={isPhoneModalOpen}
+        onClose={() => setIsPhoneModalOpen(false)}
+      />
+
+      {/* Mobile Native Bottom Navigation Bar */}
+      <MobileBottomNav
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        unreadAlertsCount={alerts.length}
       />
     </div>
   );

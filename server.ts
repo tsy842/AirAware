@@ -644,21 +644,25 @@ app.post('/api/ai/chat', async (req: Request, res: Response) => {
 // -------------------------------------------------------------
 async function startServer() {
   const isProduction = process.env.NODE_ENV === 'production';
+  const publicPath = path.resolve(process.cwd(), 'public');
+  if (fs.existsSync(publicPath)) {
+    app.use(express.static(publicPath));
+  }
 
-  if (!isProduction) {
+  const distPath = path.resolve(process.cwd(), 'dist');
+  const hasDist = fs.existsSync(distPath) && fs.existsSync(path.join(distPath, 'index.html'));
+
+  if (isProduction && hasDist) {
+    app.use(express.static(distPath));
+    app.get('*', (req: Request, res: Response) => {
+      res.sendFile(path.join(distPath, 'index.html'));
+    });
+  } else {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa'
     });
     app.use(vite.middlewares);
-  } else {
-    const distPath = path.resolve(process.cwd(), 'dist');
-    if (fs.existsSync(distPath)) {
-      app.use(express.static(distPath));
-      app.get('*', (req: Request, res: Response) => {
-        res.sendFile(path.join(distPath, 'index.html'));
-      });
-    }
   }
 
   app.listen(PORT, '0.0.0.0', () => {

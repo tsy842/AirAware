@@ -15,7 +15,8 @@ import {
   CheckCircle2,
   X,
   Globe2,
-  Flame
+  Flame,
+  Smartphone
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useDemo, DEMO_SCENARIOS, DemoScenarioId } from '../contexts/DemoContext';
@@ -34,6 +35,7 @@ interface NavbarProps {
   activeTab: 'dashboard' | 'map' | 'corridors' | 'alerts' | 'ai' | 'profile' | 'about';
   setActiveTab: (tab: 'dashboard' | 'map' | 'corridors' | 'alerts' | 'ai' | 'profile' | 'about') => void;
   onOpenAuth: () => void;
+  onOpenPhoneModal?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -41,7 +43,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onSelectLocation,
   activeTab,
   setActiveTab,
-  onOpenAuth
+  onOpenAuth,
+  onOpenPhoneModal
 }) => {
   const { user, logout, token } = useAuth();
   const { isDemoMode, toggleDemoMode, demoScenario, setScenario, currentScenarioMeta } = useDemo();
@@ -311,7 +314,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               <Globe2 className="w-4 h-4 text-cyan-400" />
-              <span className="hidden sm:inline">BRICS Hub</span>
+              <span className="hidden sm:inline">Corridors & Citizen AI</span>
             </button>
 
             <button
@@ -423,6 +426,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </div>
               )}
             </div>
+
+            {/* Phone Ready Link Trigger */}
+            {onOpenPhoneModal && (
+              <button
+                onClick={onOpenPhoneModal}
+                className="px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 bg-teal-500/10 hover:bg-teal-500/20 text-teal-300 border border-teal-500/30 transition-all cursor-pointer shadow-sm hover:border-teal-500/50"
+                title="Phone Ready link & QR Code"
+              >
+                <Smartphone className="w-3.5 h-3.5 text-teal-400" />
+                <span className="hidden sm:inline">Phone Ready</span>
+              </button>
+            )}
 
             {/* Profile or Login Trigger */}
             <div ref={profileRef} className="relative">

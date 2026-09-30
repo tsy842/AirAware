@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#042f2e" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2dd4bf" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14b8a6" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#14b8a6" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <!-- Background Base with rounded squircle for maskable/any compatibility -->
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)" />
+  <rect width="504" height="504" x="4" y="4" rx="124" fill="none" stroke="#14b8a6" stroke-opacity="0.3" stroke-width="4" />
+
+  <!-- Ambient Glow -->
+  <circle cx="256" cy="256" r="160" fill="url(#glowGrad)" />
+
+  <!-- Stylized Wind & Breath Waves (AirAware Brand Icon) -->
+  <g filter="url(#shadow)" stroke="url(#tealGrad)" stroke-width="28" stroke-linecap="round" fill="none">
+    <!-- Top Wave -->
+    <path d="M 120 200 Q 200 140 280 180 T 380 170" />
+    <!-- Center Wave with Loop -->
+    <path d="M 100 256 Q 190 256 250 220 T 360 220 A 30 30 0 1 1 340 270 L 220 270" />
+    <!-- Bottom Wave -->
+    <path d="M 140 320 Q 210 360 290 330 T 400 340" />
+  </g>
+
+  <!-- Pulse Core Dot -->
+  <circle cx="340" cy="240" r="14" fill="#5eead4" />
+</svg>

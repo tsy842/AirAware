@@ -1,0 +1,27 @@
+{
+  "id": "/",
+  "name": "AirAware — Climate Resilience & Clean Air Intelligence",
+  "short_name": "AirAware",
+  "description": "Real-time atmospheric chemistry monitoring, weather risk analysis, disaster preparedness, and AI environmental advisory.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "categories": ["weather", "health", "lifestyle", "utilities"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
