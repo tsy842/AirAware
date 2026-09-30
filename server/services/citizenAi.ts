@@ -1,5 +1,11 @@
 import { GoogleGenAI } from '@google/genai';
 
+function isValidGeminiApiKey(key?: string): boolean {
+  if (!key) return false;
+  const trimmed = key.trim();
+  return trimmed.startsWith('AIza') && trimmed.length >= 30;
+}
+
 export interface CitizenAnalysisResult {
   plumeClassification: string;
   opticalOpacityPercent: number;
@@ -19,10 +25,10 @@ export async function analyzeCitizenIncident(
 ): Promise<CitizenAnalysisResult> {
   const apiKey = process.env.GEMINI_API_KEY;
 
-  if (apiKey && apiKey !== 'MY_GEMINI_API_KEY') {
+  if (isValidGeminiApiKey(apiKey)) {
     try {
       const ai = new GoogleGenAI({
-        apiKey,
+        apiKey: apiKey!,
         httpOptions: {
           headers: {
             'User-Agent': 'aistudio-build'

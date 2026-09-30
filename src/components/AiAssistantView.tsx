@@ -12,6 +12,8 @@ interface AiAssistantViewProps {
   airData: AirQualityData | null;
   weatherData: WeatherData | null;
   riskReport: RiskIntelligenceReport | null;
+  initialPrompt?: string;
+  onClearInitialPrompt?: () => void;
 }
 
 interface Message {
@@ -27,13 +29,15 @@ export const AiAssistantView: React.FC<AiAssistantViewProps> = ({
   location,
   airData,
   weatherData,
-  riskReport
+  riskReport,
+  initialPrompt,
+  onClearInitialPrompt
 }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
       sender: 'assistant',
-      text: `Hello! I am your **AirAware Environmental Intelligence Assistant**.\n\nI have synchronized the latest atmospheric chemistry model and weather predictions for **${location.name}** (AQI: ${airData?.current.usAqi ?? 50}, Temp: ${weatherData?.current.temperature ?? 28}°C).\n\nAsk me about outdoor exercise safety, PM2.5 health impacts, mask recommendations, or heatwave & flood preparedness!`,
+      text: `Hello! I am your **AirAware Environmental Intelligence Assistant**.\n\nI have synchronized the latest atmospheric chemistry model and weather predictions for **${location.name}** (AQI: ${airData?.current.usAqi ?? 50}, PM2.5: ${airData?.current.pm2_5 ?? 25} µg/m³, Temp: ${weatherData?.current.temperature ?? 28}°C).\n\nAsk me about outdoor cardio & running safety, N95 mask requirements, protecting children or seniors, or home HEPA air filtration!`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       model: 'gemini-3.8-flash'
     }
@@ -47,12 +51,21 @@ export const AiAssistantView: React.FC<AiAssistantViewProps> = ({
     chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isLoading]);
 
+  // Handle incoming initial prompt from Dashboard or other views
+  useEffect(() => {
+    if (initialPrompt && initialPrompt.trim()) {
+      handleSend(initialPrompt.trim());
+      if (onClearInitialPrompt) onClearInitialPrompt();
+    }
+  }, [initialPrompt]);
+
   const quickPrompts = [
-    'Is it safe to go for a run outside right now?',
-    'Explain the PM2.5 reading in simple terms',
-    'What precautions should I take during a severe heatwave?',
-    'What is the difference between model estimates and ground sensors?',
-    'How should I prepare for flood or cyclone alerts?'
+    `Can I go for a run in ${location.name} right now?`,
+    `Should I wear an N95 mask outside today?`,
+    `Is it safe for children and elderly outdoors?`,
+    `How many cigarettes is breathing this air equal to?`,
+    `Should I keep windows open or closed today?`,
+    `Why is the air quality bad in ${location.name}?`
   ];
 
   const handleSend = async (questionText: string) => {

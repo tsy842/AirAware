@@ -19,6 +19,7 @@ function AppContent() {
   const { isDemoMode, demoScenario } = useDemo();
 
   const [activeTab, setActiveTab] = useState<'dashboard' | 'map' | 'corridors' | 'alerts' | 'ai' | 'profile' | 'about'>('dashboard');
+  const [aiInitialPrompt, setAiInitialPrompt] = useState<string | undefined>(undefined);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   // Active Location state
@@ -153,7 +154,10 @@ function AppContent() {
             riskReport={riskReport}
             alerts={alerts}
             isLoading={isLoading}
-            onNavigateToAi={() => setActiveTab('ai')}
+            onNavigateToAi={(prompt?: string) => {
+              if (prompt) setAiInitialPrompt(prompt);
+              setActiveTab('ai');
+            }}
             onNavigateToAlerts={() => setActiveTab('alerts')}
             onNavigateToMap={() => setActiveTab('map')}
           />
@@ -190,6 +194,8 @@ function AppContent() {
             airData={airData}
             weatherData={weatherData}
             riskReport={riskReport}
+            initialPrompt={aiInitialPrompt}
+            onClearInitialPrompt={() => setAiInitialPrompt(undefined)}
           />
         )}
 

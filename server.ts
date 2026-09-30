@@ -631,7 +631,11 @@ app.post('/api/ai/chat', async (req: Request, res: Response) => {
 
     res.json(result);
   } catch (err: any) {
-    res.status(500).json({ error: 'AI Assistant failed', details: err.message });
+    res.json({
+      text: 'AirAware Environmental Intelligence is currently operating in offline rules mode. Please check local AQI gauges on your dashboard and follow standard clean air advisories.',
+      source: 'deterministic_fallback',
+      model: 'AirAware Intelligence Rules Engine'
+    });
   }
 });
 

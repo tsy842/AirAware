@@ -50,7 +50,7 @@ export interface IndiaAqiStation {
   dominantPollutant: 'PM2.5' | 'PM10' | 'NO2';
 }
 
-const INDIA_MAJOR_STATIONS: IndiaAqiStation[] = [
+export const INDIA_MAJOR_STATIONS: IndiaAqiStation[] = [
   // Delhi NCR
   { id: 'delhi-anand-vihar', name: 'Anand Vihar CAAQMS', city: 'Delhi', state: 'Delhi', latitude: 28.6469, longitude: 77.3160, agency: 'DPCC', approxAqi: 285, dominantPollutant: 'PM2.5' },
   { id: 'delhi-rk-puram', name: 'R.K. Puram Sector 8', city: 'Delhi', state: 'Delhi', latitude: 28.5633, longitude: 77.1869, agency: 'DPCC', approxAqi: 242, dominantPollutant: 'PM2.5' },
